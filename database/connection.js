@@ -1,13 +1,16 @@
-const mongoose = require("mongoose");
+import { connect } from "mongoose";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 const connection = async() => {
-    try {
-        await mongoose.connect("mongodb://localhost:27017/bd_redsocial");
-        console.log("Conectado correctamente a la base de datos brou");
-    } catch (error) {
-      console.log(error);
-      throw new error ("No se ha podido conectar a la base de datos bro");  
-    }
+  try {
+    await connect(process.env.MONGODB_URI);
+    console.log("Conectado correctamente a la BD: bd_socialnet");
+  } catch (error) {
+    console.error("Error al conectar a la base de datos", error);
+    throw new Error("¡No se ha podido conectar a la base de datos!");
+  }
 }
 
-module.exports = connection;
+export default connection;
